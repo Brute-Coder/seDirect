@@ -5,7 +5,8 @@ const app = express();
 dbConnect();
 
 // middlewares in server
-app.use(cors({ origin: "http://localhost:5173" }));
+//app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use((req, res, next) => {
