@@ -15,7 +15,7 @@ function Redirector() {
   useEffect(() => {
     (async () => {
       try {
-        const uriString = `http://localhost:4000/api/getUrl?queryId=${shortId}`;
+        const uriString = `https://se-direct-backend.vercel.app/api/getUrl?queryId=${shortId}`;
         const data = await axios.get(uriString);
         if (!data) {
           console.log("no data received from server");

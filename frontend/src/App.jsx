@@ -20,10 +20,13 @@ export default function App() {
       return;
     }
     try {
-      const data = await axios.post("http://localhost:4000/api/createUrl", {
-        masterUrl: originalLink,
-        authText: secureText,
-      });
+      const data = await axios.post(
+        "https://se-direct-backend.vercel.app/api/createUrl",
+        {
+          masterUrl: originalLink,
+          authText: secureText,
+        }
+      );
       const url = "http://localhost:5173/" + data.data.shortId;
       setFlipped(true);
       setSecureLink(url);
