@@ -27,7 +27,7 @@ export default function App() {
           authText: secureText,
         }
       );
-      const url = "http://localhost:5173/" + data.data.shortId;
+      const url = "https://sedirect.vercel.app/" + data.data.shortId;
       setFlipped(true);
       setSecureLink(url);
     } catch (e) {
