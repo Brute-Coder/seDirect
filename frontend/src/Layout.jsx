@@ -3,6 +3,8 @@ import { Outlet } from "react-router-dom";
 import { Header } from "./components";
 import { ThemeProvider } from "./context/theme";
 import { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./index.css";
 
 function Layout() {
@@ -34,6 +36,8 @@ function Layout() {
       >
         <Header />
         <Outlet />
+        <Analytics />
+        <SpeedInsights />
       </div>
     </ThemeProvider>
   );

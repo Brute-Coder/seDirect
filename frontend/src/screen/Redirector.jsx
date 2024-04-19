@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Tilt from "react-parallax-tilt";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import page404 from "../assets/404-page-not-found copy.svg";
 import "../index.css";
+import CustomToastContainer from "../components/CustomToastContainer";
 
 function Redirector() {
   const [secureText, getSecureText] = useState("");
@@ -20,7 +21,6 @@ function Redirector() {
         if (!data) {
           console.log("no data received from server");
         } else {
-          //console.log(data.data);
           if (!data.data.idExist) {
             toast.error("Invalid Url Entered! ");
           }
@@ -29,26 +29,18 @@ function Redirector() {
       } catch (err) {
         console.log("error while fetching data from endPiont", err);
       }
-      console.log("inside the useeffect functions");
     })();
   }, []);
-  //console.log("this is my urlObj", urlObj);
 
   function handleSedirect() {
-    console.log("inside handleSedirect" + JSON.stringify(urlObj));
     if (
       secureText &&
       urlObj &&
       secureText.trim() === urlObj.authPhrase[0].trim()
     ) {
-      //   redirect(urlObj.masterUrl);
-      //   toast.success("varified!! redirecting...");
       setFlipped(true);
       window.location.href = urlObj.masterUrl;
     } else {
-      //toast("enter a valid auth phrase");
-      // alert("enter a valid auth phrase");
-
       toast.error("invalid secret phrase entered");
     }
   }
@@ -101,11 +93,11 @@ function Redirector() {
             alt="page not found icon"
           />
           <h1 className=" text-3xl font-dosis dark:text-white font-bold ">
-            Looks like you you entered A Wrong Url
+            Looks like you entered A Wrong Url
           </h1>
           <div className=" fixed bottom-0">
             <h1 className=" p-1 font-dosis text-md  dark:text-white ">
-              Made with 🐞 by soumya{" "}
+              Made with 🐞 by soumya
             </h1>
           </div>
         </div>
@@ -117,7 +109,7 @@ function Redirector() {
         // style={{ top: "100px", right: "-50px", zIndex: 0 }}
       ></div> */}
 
-      <ToastContainer
+      {/* <ToastContainer
         position="top-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -133,7 +125,8 @@ function Redirector() {
             : "dark"
         }
         transition:Bounce
-      />
+      /> */}
+      <CustomToastContainer />
     </div>
   );
 }

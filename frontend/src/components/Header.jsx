@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Navbar } from "flowbite-react";
+import { Navbar } from "flowbite-react";
 import { ThemeBtn } from "../components";
-import logo from "../assets/react.svg";
+
 import logo1 from "../assets/maximize.png";
 
 function Header() {

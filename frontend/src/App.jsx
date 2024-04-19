@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import copyIcon from "./assets/copy.svg";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import Tilt from "react-parallax-tilt";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import CustomToastContainer from "./components/CustomToastContainer";
 
 export default function App() {
   const [originalLink, setOriginalLink] = useState("");
@@ -119,7 +120,7 @@ export default function App() {
           </h1>
         </div>
       </div>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-center"
         autoClose={2000}
         hideProgressBar={false}
@@ -135,7 +136,8 @@ export default function App() {
             : "dark"
         }
         transition:Bounce
-      />
+      /> */}
+      <CustomToastContainer />
     </div>
   );
 }
