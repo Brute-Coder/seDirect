@@ -3,6 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
+#root {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+}
+
 .flip-vh {
   transform-style: preserve-3d;
   transition: transform 0.8s;

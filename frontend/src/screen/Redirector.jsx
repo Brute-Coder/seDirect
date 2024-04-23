@@ -7,11 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 import page404 from "../assets/404-page-not-found copy.svg";
 import "../index.css";
 import CustomToastContainer from "../components/CustomToastContainer";
+import useTheme from "../context/theme";
+import { IoLogoGithub } from "react-icons/io5";
 
 function Redirector() {
   const [secureText, getSecureText] = useState("");
   const [urlObj, setUrlObj] = useState(null);
   const [flipped, setFlipped] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { themeMode } = useTheme();
   const { shortId } = useParams();
   useEffect(() => {
     (async () => {
@@ -28,6 +32,8 @@ function Redirector() {
         }
       } catch (err) {
         console.log("error while fetching data from endPiont", err);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
@@ -43,6 +49,15 @@ function Redirector() {
     } else {
       toast.error("invalid secret phrase entered");
     }
+  }
+
+  if (loading) {
+    return (
+      <div className="flex h-screen w-screen justify-center items-center overscroll-none overflow-hidden">
+        <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+        <div className="dark:text-white font-bold text-xl ml-2">Loading...</div>
+      </div>
+    );
   }
   return (
     <div>
@@ -77,9 +92,22 @@ function Redirector() {
                 </div>
               </div>
             </Tilt>
+            <div className="fixed bottom-0 right-0 m-5 ">
+              <a
+                href="https://github.com/Brute-Coder"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center rounded-full p-2 bg-black dark:bg-white animate-bounce"
+              >
+                <IoLogoGithub
+                  size={"30px"}
+                  color={themeMode !== "light" ? "black" : "white"}
+                />
+              </a>
+            </div>
             <div className=" fixed bottom-0">
               <h1 className=" p-1 font-dosis text-md  dark:text-white ">
-                Made with 🐞 by soumya
+                Made with 🐞 by soumya | Link expires in 1 day
               </h1>
             </div>
           </div>
@@ -95,9 +123,22 @@ function Redirector() {
           <h1 className=" text-3xl font-dosis dark:text-white font-bold ">
             Looks like you entered A Wrong Url
           </h1>
+          <div className="fixed bottom-0 right-0 m-5 ">
+            <a
+              href="https://github.com/Brute-Coder"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center rounded-full p-2 bg-black dark:bg-white animate-bounce"
+            >
+              <IoLogoGithub
+                size={"30px"}
+                color={themeMode !== "light" ? "black" : "white"}
+              />
+            </a>
+          </div>
           <div className=" fixed bottom-0">
             <h1 className=" p-1 font-dosis text-md  dark:text-white ">
-              Made with 🐞 by soumya
+              Made with 🐞 by soumya | Link expires in 1 day
             </h1>
           </div>
         </div>
@@ -109,23 +150,6 @@ function Redirector() {
         // style={{ top: "100px", right: "-50px", zIndex: 0 }}
       ></div> */}
 
-      {/* <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={
-          document.querySelector("html").classList[0] === "dark"
-            ? "light"
-            : "dark"
-        }
-        transition:Bounce
-      /> */}
       <CustomToastContainer />
     </div>
   );

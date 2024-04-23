@@ -6,21 +6,27 @@ import Tilt from "react-parallax-tilt";
 import axios from "axios";
 import { toast } from "react-toastify";
 import CustomToastContainer from "./components/CustomToastContainer";
+import { IoLogoGithub } from "react-icons/io5";
+import useTheme from "./context/theme";
 
 export default function App() {
   const [originalLink, setOriginalLink] = useState("");
   const [secureText, setSecureText] = useState("");
   const [secureLink, setSecureLink] = useState("");
   const [flipped, setFlipped] = useState(false);
+  const [generate, setGenerate] = useState(false);
+  const { themeMode } = useTheme();
   const copyRef = useRef(null);
 
   async function handleGenerate() {
+    if (generate) return;
     if (!originalLink || !secureText) {
       if (!originalLink) toast.warn("Please Provide Valid Link");
       else toast.warn("secure text can't be empty");
       return;
     }
     try {
+      setGenerate(true);
       const data = await axios.post(
         "https://se-direct-backend.vercel.app/api/createUrl",
         {
@@ -28,6 +34,7 @@ export default function App() {
           authText: secureText,
         }
       );
+      setGenerate(false);
       const url = "https://sedirect.vercel.app/" + data.data.shortId;
       setFlipped(true);
       setSecureLink(url);
@@ -58,7 +65,7 @@ export default function App() {
       <div className=" mt-10 flex flex-col justify-center items-center">
         <Tilt scale={1.15} transitionSpeed={2500}>
           <div
-            className={`container h-96 w-96 bg-opacity-20 bg-black dark:bg-white dark:bg-opacity-10 rounded-2xl shadow-5xl border border-r-0 border-b-0 
+            className={`container h-96 w-96 bg-opacity-20 bg-black text-black dark:bg-white dark:bg-opacity-10 rounded-2xl shadow-5xl border border-r-0 border-b-0 
             border-opacity-10 backdrop-filter backdrop-blur-sm ${
               flipped ? "flip-vh" : ""
             }`}
@@ -73,7 +80,7 @@ export default function App() {
                   placeholder="Original Link"
                   value={originalLink}
                   onChange={(e) => setOriginalLink(e.target.value)}
-                  className="font-poppins bg-transparent border border-t-0 border-l-0 border-r-0 focus:outline-none text-white tracking-wide"
+                  className="font-poppins bg-transparent border border-t-0 border-l-0 border-r-0 focus:outline-none text-white tracking-wide "
                 />
                 <input
                   type="text"
@@ -85,9 +92,13 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => handleGenerate()}
-                  className="cursor-pointer font-poppins rounded-full px-5 py-1 bg-white bg-opacity-50 hover:bg-white hover:bg-opacity-80 "
+                  className={` font-poppins rounded-full ${
+                    !generate
+                      ? " cursor-pointer"
+                      : " cursor-not-allowed animate-pulse "
+                  } px-5 py-1 bg-white bg-opacity-50 hover:bg-white hover:bg-opacity-80`}
                 >
-                  Generate
+                  {!generate ? "Generate" : "Generating"}
                 </button>
               </form>
             ) : (
@@ -114,29 +125,25 @@ export default function App() {
             )}
           </div>
         </Tilt>
+        <div className="fixed bottom-0 right-0 m-5 ">
+          <a
+            href="https://github.com/Brute-Coder"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center rounded-full p-2 bg-black dark:bg-white animate-bounce"
+          >
+            <IoLogoGithub
+              size={"30px"}
+              color={themeMode !== "light" ? "black" : "white"}
+            />
+          </a>
+        </div>
         <div className=" fixed bottom-0 ">
           <h1 className=" p-1 font-dosis text-md  dark:text-white ">
-            Made with 🐞 by soumya
+            Made with 🐞 by soumya | Link expires in 1 day
           </h1>
         </div>
       </div>
-      {/* <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme={
-          document.querySelector("html").classList[0] === "dark"
-            ? "light"
-            : "dark"
-        }
-        transition:Bounce
-      /> */}
       <CustomToastContainer />
     </div>
   );
