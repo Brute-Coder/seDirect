@@ -27,10 +27,17 @@ export default function App() {
     }
     try {
       setGenerate(true);
+      let masterUrl = originalLink;
+      if (
+        !originalLink.startsWith("http://") &&
+        !originalLink.startsWith("https://")
+      ) {
+        masterUrl = "http://" + originalLink;
+      }
       const data = await axios.post(
         "https://se-direct-backend.vercel.app/api/createUrl",
         {
-          masterUrl: originalLink,
+          masterUrl: masterUrl,
           authText: secureText,
         }
       );
