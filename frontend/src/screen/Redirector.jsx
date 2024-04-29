@@ -9,6 +9,7 @@ import "../index.css";
 import CustomToastContainer from "../components/CustomToastContainer";
 import useTheme from "../context/theme";
 import { IoLogoGithub } from "react-icons/io5";
+import "ldrs/quantum";
 
 function Redirector() {
   const [secureText, getSecureText] = useState("");
@@ -54,8 +55,10 @@ function Redirector() {
   if (loading) {
     return (
       <div className="flex h-screen w-screen justify-center items-center overscroll-none overflow-hidden">
-        <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
-        <div className="dark:text-white font-bold text-xl ml-2">Loading...</div>
+        {/* <div className="animate-spin rounded-full h-20 w-20 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+        <div className="dark:text-white font-bold text-xl ml-2">Loading...</div> */}
+
+        <l-quantum size="110" speed="1.25" color="white"></l-quantum>
       </div>
     );
   }
