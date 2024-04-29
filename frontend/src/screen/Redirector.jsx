@@ -9,7 +9,7 @@ import "../index.css";
 import CustomToastContainer from "../components/CustomToastContainer";
 import useTheme from "../context/theme";
 import { IoLogoGithub } from "react-icons/io5";
-import "ldrs/quantum";
+import { quantum } from "ldrs";
 
 function Redirector() {
   const [secureText, getSecureText] = useState("");
@@ -18,6 +18,7 @@ function Redirector() {
   const [loading, setLoading] = useState(true);
   const { themeMode } = useTheme();
   const { shortId } = useParams();
+  quantum.register();
   useEffect(() => {
     (async () => {
       try {
